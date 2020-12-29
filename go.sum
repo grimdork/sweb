@@ -1,0 +1,4 @@
+github.com/Urethramancer/signor v0.10.2 h1:Re02wGIJMtrpAUS9t9TvMkjx++ST2LtNHBI7+0w6Xvs=
+github.com/Urethramancer/signor v0.10.2/go.mod h1:DORKrGOeJ735IqsyRFgGKpE5miMDmMhkK/iQAoaVF4g=
+github.com/go-chi/chi v1.5.1 h1:kfTK3Cxd/dkMu/rKs5ZceWYp+t5CtiE7vmaTv3LjC6w=
+github.com/go-chi/chi v1.5.1/go.mod h1:REp24E+25iKvxgeTfHmdUoL5x15kBiDBlnIl5bCwe2k=
