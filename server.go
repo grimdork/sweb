@@ -42,6 +42,12 @@ func New() *Server {
 	srv := &Server{}
 	srv.web = chi.NewRouter()
 
+	// Logging
+	srv.Logger = log.Default
+	srv.L = log.Default.TMsg
+	srv.E = log.Default.TErr
+
+	// Routes
 	srv.web.Use(
 		middleware.RealIP,
 		middleware.RequestID,
@@ -54,11 +60,6 @@ func New() *Server {
 		r.Get("/*", srv.Static)
 		r.Options("/", Preflight)
 	})
-
-	// Logging
-	srv.Logger = log.Default
-	srv.L = log.Default.TMsg
-	srv.E = log.Default.TErr
 
 	return srv
 }
