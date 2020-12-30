@@ -72,7 +72,7 @@ srv.Route("/api", func(r chi.Router) {
 })
 ```
 
-$$ Middleware
+## Middleware
 These middlware functions are available for use, in addition to everything found in chi:
 
 - AddJSONHeaders: For typical REST endpoints

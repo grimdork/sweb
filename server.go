@@ -54,6 +54,12 @@ func (srv *Server) Init() {
 	srv.Logger = log.Default
 	srv.L = log.Default.TMsg
 	srv.E = log.Default.TErr
+
+	// Default timeouts
+	srv.Server.IdleTimeout = time.Second * 30
+	srv.Server.ReadTimeout = time.Second * 30
+	srv.Server.ReadHeaderTimeout = time.Second * 5
+	srv.Server.WriteTimeout = time.Second * 30
 }
 
 // InitMiddleware sets up basic middleware on the root web route.
