@@ -41,7 +41,6 @@ func (srv *Server) Static(w http.ResponseWriter, r *http.Request) {
 // NOTE: The server needs to be reloaded if the environment somehow changes.
 func (srv *Server) ServeFile(w http.ResponseWriter, r *http.Request, name string) {
 	fn := filepath.Join(srv.staticpath, name)
-	srv.L("Serving file '%s' from filename '%s'", name, fn)
 	f, err := os.Open(fn)
 	if err != nil {
 		http.NotFound(w, r)

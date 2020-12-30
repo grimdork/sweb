@@ -40,28 +40,40 @@ const (
 // WEBSTATIC - default "./static/"
 func New() *Server {
 	srv := &Server{}
+	srv.Init()
+	srv.InitMiddleware()
+	srv.InitRouter()
+	return srv
+}
+
+// Init sets up the basics, but no routes.
+func (srv *Server) Init() {
 	srv.web = chi.NewRouter()
 
 	// Logging
 	srv.Logger = log.Default
 	srv.L = log.Default.TMsg
 	srv.E = log.Default.TErr
+}
 
-	// Routes
+// InitMiddleware sets up basic middleware on the root web route.
+// These are RealIP and RequestID from chi, a logger for visits and HTML headers.
+func (srv *Server) InitMiddleware() {
 	srv.web.Use(
 		middleware.RealIP,
 		middleware.RequestID,
 		srv.addLogger,
 		AddHTMLHeaders,
 	)
+}
 
+// InitRouter creates the default root router which loads files from the WEBSTATIC path.
+func (srv *Server) InitRouter() {
 	srv.WebGet("/", srv.Static)
 	srv.WebGets("/{page}", func(r chi.Router) {
 		r.Get("/*", srv.Static)
 		r.Options("/", Preflight)
 	})
-
-	return srv
 }
 
 // Start serving, reconfiguring from any changed environment variables.
@@ -108,10 +120,3 @@ func (srv *Server) Stop() {
 
 	srv.Wait()
 }
-
-// func (ws *Server) wout(w http.ResponseWriter, s string) {
-//         n, err := w.Write([]byte(s))
-//         if err != nil {
-//                 ws.E("Error: wrote %d bytes: %s", n, err.Error())
-//         }
-// }
