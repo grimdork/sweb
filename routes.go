@@ -35,6 +35,7 @@ func (srv *Server) Static(w http.ResponseWriter, r *http.Request) {
 // ServeFile serves a file from the WEBSTATIC path.
 // NOTE: The server needs to be reloaded if the environment somehow changes.
 func (srv *Server) ServeFile(w http.ResponseWriter, r *http.Request, name string) {
+	srv.L("Serving file '%s'", name)
 	fn := filepath.Join(srv.static, name)
 	f, err := os.Open(fn)
 	if err != nil {
