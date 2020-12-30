@@ -22,7 +22,7 @@ type Server struct {
 
 	web *chi.Mux
 
-	static string
+	staticpath string
 }
 
 const (
@@ -69,6 +69,7 @@ func (srv *Server) Start() error {
 	srv.Lock()
 	defer srv.Unlock()
 
+	srv.staticpath = getenv("WEBSTATIC", WEBSTATIC)
 	addr := net.JoinHostPort(
 		getenv("WEBHOST", WEBHOST),
 		getenv("WEBPORT", WEBPORT),
