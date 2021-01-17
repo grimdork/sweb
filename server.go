@@ -87,10 +87,10 @@ func (srv *Server) Start() error {
 	srv.Lock()
 	defer srv.Unlock()
 
-	srv.staticpath = getenv("WEBSTATIC", WEBSTATIC)
+	srv.staticpath = Getenv("WEBSTATIC", WEBSTATIC)
 	addr := net.JoinHostPort(
-		getenv("WEBHOST", WEBHOST),
-		getenv("WEBPORT", WEBPORT),
+		Getenv("WEBHOST", WEBHOST),
+		Getenv("WEBPORT", WEBPORT),
 	)
 	listener, err := net.Listen("tcp", addr)
 	if err != nil {
