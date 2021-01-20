@@ -13,13 +13,11 @@ import (
 // WebGet adds a GET route matching the specified pattern.
 func (srv *Server) WebGet(pattern string, handler http.HandlerFunc) {
 	srv.web.Get(pattern, handler)
-	srv.L("Added GET route for %s", pattern)
 }
 
 // WebGets adds one or more GET routes to the specified pattern.
 func (srv *Server) WebGets(pattern string, fn func(r chi.Router)) {
 	srv.web.Route(pattern, fn)
-	srv.L("Added GET routes for %s", pattern)
 }
 
 // Route adds more sub-routes to a chi route.
