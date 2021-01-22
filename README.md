@@ -6,7 +6,7 @@ This is a quickstart package to get a web server app running, waiting on a port 
 
 This is geared at things running in typical Docker, AWS etc. setups behind a reverse proxy which handles the domain and certificates. If you need S3, GCP or other special backend storage support, write a route for it. See chi documentation for more on how routing works.
 
-## How do try it?
+## How do I try it?
 The minimal example:
 
 ```go
