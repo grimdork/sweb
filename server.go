@@ -21,8 +21,8 @@ type Server struct {
 	http.Server
 
 	web        *chi.Mux
-	starthooks []Hook
-	stophooks  []Hook
+	starthooks []StartHook
+	stophooks  []StopHook
 
 	staticpath string
 }
