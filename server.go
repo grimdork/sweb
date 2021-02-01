@@ -20,7 +20,9 @@ type Server struct {
 	log.LogShortcuts
 	http.Server
 
-	web *chi.Mux
+	web        *chi.Mux
+	starthooks []Hook
+	stophooks  []Hook
 
 	staticpath string
 }
@@ -84,6 +86,13 @@ func (srv *Server) InitRouter() {
 
 // Start serving, reconfiguring from any changed environment variables.
 func (srv *Server) Start() error {
+	for _, cb := range srv.starthooks {
+		err := cb()
+		if err != nil {
+			return err
+		}
+	}
+
 	srv.Lock()
 	defer srv.Unlock()
 
@@ -121,8 +130,10 @@ func (srv *Server) Stop() {
 	err := srv.Shutdown(ctx)
 	if err != nil {
 		srv.E("Shutdown error: %s", err.Error())
-		os.Exit(2)
 	}
 
+	for _, cb := range srv.stophooks {
+		cb()
+	}
 	srv.Wait()
 }
