@@ -20,6 +20,11 @@ func (srv *Server) WebGets(pattern string, fn func(r chi.Router)) {
 	srv.web.Route(pattern, fn)
 }
 
+// WebPost adds a POST route matching the specified pattern.
+func (srv *Server) WebPost(pattern string, handler http.HandlerFunc) {
+	srv.web.Post(pattern, handler)
+}
+
 // Route adds more sub-routes to a chi route.
 func (srv *Server) Route(pattern string, fn func(r chi.Router)) chi.Router {
 	return srv.web.Route(pattern, fn)
