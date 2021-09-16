@@ -75,6 +75,11 @@ func (srv *Server) InitMiddleware() {
 	)
 }
 
+// Use passes middleware to the root web route.
+func (srv *Server) Use(middlewares ...func(http.Handler) http.Handler) {
+	srv.web.Use(middlewares...)
+}
+
 // InitRouter creates the default root router which loads files from the WEBSTATIC path.
 func (srv *Server) InitRouter() {
 	srv.WebGet("/", srv.Static)
