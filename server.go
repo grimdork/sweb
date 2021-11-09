@@ -29,9 +29,9 @@ type Server struct {
 
 const (
 	// WEBHOST default
-	WEBHOST = "127.0.0.1"
+	WEBHOST = "0.0.0.0"
 	// WEBPORT default
-	WEBPORT = "15000"
+	WEBPORT = "80"
 	// WEBSTATIC default
 	WEBSTATIC = "static"
 )
