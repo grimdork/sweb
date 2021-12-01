@@ -8,16 +8,15 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Urethramancer/signor/log"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	ll "github.com/grimdork/loglines"
 )
 
 // Server structure.
 type Server struct {
 	sync.RWMutex
 	sync.WaitGroup
-	log.LogShortcuts
 	http.Server
 
 	web        *chi.Mux
@@ -51,11 +50,6 @@ func New() *Server {
 // Init sets up the basics, but no routes.
 func (srv *Server) Init() {
 	srv.web = chi.NewRouter()
-
-	// Logging
-	srv.Logger = log.Default
-	srv.L = log.Default.TMsg
-	srv.E = log.Default.TErr
 
 	// Default timeouts
 	srv.Server.IdleTimeout = time.Second * 30
@@ -112,16 +106,16 @@ func (srv *Server) Start() error {
 	}
 
 	srv.Add(1)
-	srv.L("Starting web server on http://%s", addr)
+	ll.Msg("Starting web server on http://%s", addr)
 	go func() {
 		srv.Handler = srv.web
 		err = srv.Serve(listener)
 
 		if err != nil && err != http.ErrServerClosed {
-			srv.E("Error running server: %s", err.Error())
+			ll.Err("Error running server: %s", err.Error())
 			os.Exit(2)
 		}
-		srv.L("Stopped web server.")
+		ll.Msg("Stopped web server.")
 		srv.Done()
 	}()
 
@@ -134,7 +128,7 @@ func (srv *Server) Stop() {
 	defer cancel()
 	err := srv.Shutdown(ctx)
 	if err != nil {
-		srv.E("Shutdown error: %s", err.Error())
+		ll.Err("Shutdown error: %s", err.Error())
 	}
 
 	for _, cb := range srv.stophooks {

@@ -1,11 +1,15 @@
 package sweb
 
-import "net/http"
+import (
+	"net/http"
+
+	ll "github.com/grimdork/loglines"
+)
 
 func (srv *Server) addLogger(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		go func() {
-			srv.Logger.TMsg("client %s %s %s", r.RemoteAddr, r.Method, r.RequestURI)
+			ll.Msg("client %s %s %s", r.RemoteAddr, r.Method, r.RequestURI)
 		}()
 		next.ServeHTTP(w, r)
 	}
